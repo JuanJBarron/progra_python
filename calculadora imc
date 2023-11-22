@@ -1,0 +1,44 @@
+class CalculadoraIMC:
+    def __init__(self, peso, altura):
+        self.peso = peso
+        self.altura = altura
+
+    @property
+    def obtener_peso(self):
+        return self.peso
+
+    @property
+    def obtener_altura(self):
+        return self.altura
+
+    @property
+    def calcular_imc(self):
+        """
+        Método para calcular el Índice de Masa Corporal (IMC).
+        Fórmula: IMC = peso / (altura^2)
+        """
+        try:
+            imc = self.peso / (self.altura ** 2)
+            return imc
+        except ZeroDivisionError:
+            print("Error: La altura no puede ser cero.")
+
+    def establecer_peso_altura(self, nuevo_peso, nueva_altura):
+        """
+        Método para establecer un nuevo peso y altura.
+        """
+        self.peso = nuevo_peso
+        self.altura = nueva_altura
+
+mi_calculadora_imc = CalculadoraIMC(peso=70, altura=1.75)
+
+print("Peso:", mi_calculadora_imc.obtener_peso)
+print("Altura:", mi_calculadora_imc.obtener_altura)
+
+imc_actual = mi_calculadora_imc.calcular_imc
+print("IMC actual:", imc_actual)
+
+mi_calculadora_imc.establecer_peso_altura(nuevo_peso=75, nueva_altura=1.80)
+
+imc_nuevo = mi_calculadora_imc.calcular_imc
+print("Nuevo IMC:", imc_nuevo)
