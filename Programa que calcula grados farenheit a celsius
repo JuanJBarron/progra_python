@@ -1,0 +1,58 @@
+import re
+
+class Lectura:
+    def __init__(self, grados_f):
+        self.grados_f = grados_f
+
+    @property
+    def grados_c(self):
+        return (self.grados_f - 32) / 1.8
+
+    @property
+    def estado(self):
+        if self.grados_c < 35:
+            return "Hipotermia"
+        elif 35 <= self.grados_c < 37:
+            return "Normal"
+        elif 37 <= self.grados_c < 38:
+            return "Febrícula"
+        elif 38 <= self.grados_c < 41:
+            return "Fiebre"
+        else:
+            return "Hiperpirexia"
+
+    def mostrar_lectura(self):
+        return f"Fahrenheit: {self.grados_f}°F\nCentigrados: {self.grados_c}°C\nEstado: {self.estado}"
+
+def capturar_f(prompt="Dame la temperatura del paciente: "):
+    while True:
+        dato = input(prompt)
+        if not dato:
+            print("Error: El dato no puede estar en blanco.")
+            continue
+        if not re.match(r'^\d{1,3}(\.\d{1,3})?$', dato):
+            print("Error: El dato debe tener de 1 a 3 dígitos, un punto, y de 1 a 3 decimales.")
+            continue
+        try:
+            valor = float(dato)
+            if valor < 0.0 or valor > 150.0:
+                print("Error: El valor debe estar entre 0.0 y 150.0.")
+                continue
+            return valor
+        except ValueError:
+            print("Error: Ingresa un número flotante válido entre 0.0 y 150.0.")
+
+lecturas = []
+
+while True:
+    grados_f = capturar_f()
+    nueva_lectura = Lectura(grados_f)
+    lecturas.append(nueva_lectura)
+
+    continuar = input("¿Desea capturar una lectura más? (Sí/No): ").strip().lower()
+    if continuar != "si":
+        break
+
+print("\nLecturas capturadas:")
+for lectura in lecturas:
+    print(lectura.mostrar_lectura())
